@@ -1,0 +1,75 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+{% if tasks | length <= 0 %}
+    <p>登録されたタスクがありません</p>
+{% else %}
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>タイトル</th>
+            <th>概要・説明</th>
+            <th>ステータス</th>
+            <th>期限日</th>
+            <th>作成日</th>
+            <th>更新日</th>
+            <th>設定</th>
+        </tr>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.id }}</td>
+                <td>{{ task.title }}</td>
+                <td>{{ task.description }}</td>
+                <td>
+                    {% if task.status == "todo" %}
+                        <span style="color: orange;">未着手</span>
+                    {% endif %}
+                    {% if task.status == "in_progress" %}
+                        <span style="color: blue;">着手中</span>
+                    {% endif %}
+                    {% if task.status == "done" %}
+                        <span style="color: green;">対応済み</span>
+                    {% endif %}
+                </td>
+                <td>{{ task.deadline.strftime('%Y/%m/%d') }}</td>
+                <td>{{ task.created_at.strftime('%Y/%m/%d') }}</td>
+                <td>{{ task.updated_at.strftime('%Y/%m/%d') }}</td>
+                <td>
+                    <a href="/tasks/{{ task.id }}">編集</a>
+                    <span>・</span>
+                    <br>
+                    <a href="/tasks/{{ task.id }}/delete" class="delete-button">削除</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+{% endblock  %}
+
+
+{% block style %}
+<style>
+    table {
+        width: 100%;
+        text-align: center;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    table th {
+     padding: 10px;
+     background: #e9faf9;
+     border: solid 1px #778ca3;
+    }
+
+    table td {
+     padding: 10px;
+     border: solid 1px #778ca3;
+    }
+
+    .delete-button {
+        color: red;
+    }
+</style>
+{% endblock  %}

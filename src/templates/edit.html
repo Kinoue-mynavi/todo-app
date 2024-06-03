@@ -1,0 +1,81 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<h2>タスクを更新</h2>
+<p>以下のフォームよりタスクの情報を更新してください</p>
+
+<table>
+    <tr>
+        <th>最終更新日</th>
+        <th>作成日</th>
+        <th>期限日</th>
+    </tr>
+    <tr>
+        <td>{{ task.updated_at.strftime('%Y/%m/%d') }}</td>
+        <td>{{ task.created_at.strftime('%Y/%m/%d') }}</td>
+        <td>{{ task.deadline.strftime('%Y/%m/%d') }}</td>
+    </tr>
+</table>
+
+<form method="post" class="form" action="/tasks/{{ task.id }}">
+    <div class="input-container">
+        <label for="title">タイトル</label>
+        <input type="text" class="form-control" id="title" name="title" value="{{ task.title }}">
+    </div>
+
+    <div class="input-container">
+        <label for="status">ステータス</label>
+        <select name="status" class="select">
+            <option value="todo" {% if task.status == 'todo' %} selected {% endif %}>未着手</option>
+            <option value="in_progress" "{% if task.status == 'in_progress' %} selected {% endif %}>着手中</option>
+            <option value="done" "{% if task.status == 'done' %} selected {% endif %}>対応済み</option>
+        </select>
+    </div>
+
+    <div class="input-container">
+        <label for="description">概要・説明</label>
+        <input type="text" class="form-control" id="description" name="description" value="{{ task.description }}">
+    </div>
+
+    <div class="input-container">
+        <label for="deadline">期限日</label>
+        <input type="date" class="form-control" id="deadline" name="deadline" value="{{ task.deadline }}">
+    </div>
+
+    <button type="submit" class="btn btn-primary">更新</button>
+</form>
+
+{% endblock  %}
+
+{% block style %}
+<style>
+    .input-container {
+        margin-bottom: 24px;
+    } 
+    
+    .select {
+        display: block;
+        padding-inline: 10px;
+        padding-block: 6px;
+    }
+
+    table {
+        width: 100%;
+        text-align: center;
+        border-collapse: collapse;
+        border-spacing: 0;
+        margin-block: 32px;
+    }
+
+    table th {
+     padding: 10px;
+     background: #e9faf9;
+     border: solid 1px #778ca3;
+    }
+
+    table td {
+     padding: 10px;
+     border: solid 1px #778ca3;
+    }
+</style>
+{% endblock  %}
