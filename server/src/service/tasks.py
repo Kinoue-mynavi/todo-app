@@ -9,7 +9,7 @@ def get_all_tasks():
         print(e)
         print('データの取得に失敗しました')
 
-def get_task(id: int):
+def get_task(id):
     try: 
         return Task.query.get(id)
     except Exception as e:

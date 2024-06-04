@@ -1,5 +1,10 @@
-run:
-	python server.py
+# Server
+run-s:
+	cd server && python server.py
 
 db-migrate:
-	python manage.py init_db
+	cd server && python manage.py init_db
+
+# Client
+run-c:
+	cd client && npm run dev
